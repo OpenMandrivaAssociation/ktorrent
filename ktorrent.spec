@@ -1,10 +1,21 @@
 
 %define	name	ktorrent
 %define	version 2.1.3
-%define	rel	1
+%define	rel	2
+
+# Note that this package does not follow the library policy as the
+# main package includes the libktorrent shared object. This is done
+# because 1) the library is only used internally by ktorrent, and so
+# it does never need to be installed separately, and 2) the %major
+# follows %version, thus resulting in one unuseful library package
+# in every ktorrent version upgrade. The only downside of not
+# following the library policy on this particular package I know is
+# rpmlint going nuts.
+#
+# Feel free to flame me if you do not like this...
+# -Anssi
 
 %define major	%version
-%define libname	%mklibname %name %major
 
 Summary:	BitTorrent program for KDE
 Name:		%{name}
@@ -19,7 +30,8 @@ Patch2:         ktorrent-2.1-zeroconf-link-kdeui.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	gmp-devel
 BuildRequires:	kdelibs-devel
-Conflicts:	%{_lib}ktorrent0
+Obsoletes:	%{_lib}ktorrent0 %{_lib}ktorrent2.1 %{_lib}ktorrent2.1.1
+Obsoletes:	%{_lib}ktorrent2.1.2 %{_lib}ktorrent2.1.3
 
 %description
 KTorrent is a BitTorrent program for KDE. It's main features are:
@@ -34,6 +46,7 @@ KTorrent is a BitTorrent program for KDE. It's main features are:
 %doc AUTHORS README
 %{_bindir}/*
 %{_libdir}/kde3
+%{_libdir}/libktorrent-%major.so
 %{_datadir}/services/*
 %{_datadir}/servicetypes/*
 %{_datadir}/apps/%{name}
@@ -47,29 +60,6 @@ KTorrent is a BitTorrent program for KDE. It's main features are:
 %{_iconsdir}/hicolor/*/apps/*.png
 %{_iconsdir}/hicolor/*/mimetypes/*.png
 %{_iconsdir}/hicolor/*/mimetypes/*.svgz
-
-#--------------------------------------------------------------------
-
-# I consider this library package useless and would integrate the lib
-# into the main package. TODO: Library policy exception for internal
-# libraries. -Anssi
-
-%package -n    %{libname}
-Group:         System/Libraries
-Summary:       Libraries for %{name}
-
-%description -n        %{libname}
-The libraries from %{name} package
-
-%post -n %{libname} -p /sbin/ldconfig
-
-%postun -n %{libname} -p /sbin/ldconfig
-
-%files -n %{libname}
-%defattr(-,root,root)
-%{_libdir}/libktorrent-%major.so
-
-#--------------------------------------------------------------------
 
 %prep
 %setup -q
@@ -116,16 +106,16 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/mimelnk/application/x-bittorrent.desktop
 rm -rf $RPM_BUILD_ROOT
 
 %post
+/sbin/ldconfig
 %update_menus
 %update_desktop_database
 %update_icon_cache hicolor
 
 %postun
+/sbin/ldconfig
 %clean_menus
 %clean_desktop_database
 %clean_icon_cache hicolor
 
 # This is a workaround for #27417
-
-
 
