@@ -66,6 +66,10 @@ KTorrent is a BitTorrent program for KDE. It's main features are:
 #%patch2 -p1
 
 %build
+# needed as of 2.1.3-2mdv
+export CFLAGS="%optflags -fPIC"
+export CXXFLAGS="%optflags -fPIC"
+
 make -f admin/Makefile.common cvs
 %configure2_5x	--disable-debug \
 		--enable-mt \
