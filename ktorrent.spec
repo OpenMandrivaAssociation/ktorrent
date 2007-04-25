@@ -1,7 +1,9 @@
 
 %define	name	ktorrent
-%define	version 2.1.3
-%define	rel	2
+%define	version 2.1.4
+%define	rel	1
+
+
 
 # Note that this package does not follow the library policy as the
 # main package includes the libktorrent shared object. This is done
@@ -23,10 +25,8 @@ Version:	%{version}
 Release:	%mkrel %{rel}
 Group:		Networking/File transfer
 License:	GPL
-Url:		http://ktorrent.pwsp.net/
-Source0:	%{name}-%{version}.tar.bz2
-# our kde avahi stuff needs kdeui
-Patch2:         ktorrent-2.1-zeroconf-link-kdeui.patch
+Url:		http://ktorrent.org/
+Source0:	http://ktorrent.org/downloads/%{version}/%{name}-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	gmp-devel
 BuildRequires:	kdelibs-devel
@@ -63,13 +63,8 @@ KTorrent is a BitTorrent program for KDE. It's main features are:
 
 %prep
 %setup -q
-#%patch2 -p1
 
 %build
-# needed as of 2.1.3-2mdv
-export CFLAGS="%optflags -fPIC"
-export CXXFLAGS="%optflags -fPIC"
-
 make -f admin/Makefile.common cvs
 %configure2_5x	--disable-debug \
 		--enable-mt \
