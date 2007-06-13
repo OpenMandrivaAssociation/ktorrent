@@ -1,7 +1,7 @@
 
 %define	name	ktorrent
 %define	version 2.1.4
-%define	rel	1
+%define	rel	2
 
 
 
@@ -45,7 +45,7 @@ KTorrent is a BitTorrent program for KDE. It's main features are:
 %defattr(-,root,root)
 %doc AUTHORS README
 %{_bindir}/*
-%{_libdir}/kde3
+%{_libdir}/kde3/*
 %{_libdir}/libktorrent-%major.so
 %{_datadir}/services/*
 %{_datadir}/servicetypes/*
