@@ -30,6 +30,7 @@ Source0:	http://ktorrent.org/downloads/%{version}/%{name}-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	gmp-devel
 BuildRequires:	kdelibs-devel
+BuildRequires:	mandriva-create-kde-mdk-menu
 Obsoletes:	%{_lib}ktorrent0 %{_lib}ktorrent2.1 %{_lib}ktorrent2.1.1
 Obsoletes:	%{_lib}ktorrent2.1.2 %{_lib}ktorrent2.1.3
 
