@@ -1,9 +1,6 @@
-
 %define	name	ktorrent
-%define	version 2.1.4
-%define	rel	2
-
-
+%define	version 2.2
+%define	rel	1
 
 # Note that this package does not follow the library policy as the
 # main package includes the libktorrent shared object. This is done
@@ -26,7 +23,7 @@ Release:	%mkrel %{rel}
 Group:		Networking/File transfer
 License:	GPL
 Url:		http://ktorrent.org/
-Source0:	http://ktorrent.org/downloads/%{version}/%{name}-%{version}.tar.bz2
+Source0:	http://ktorrent.org/downloads/%{version}/%{name}-%{version}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	gmp-devel
 BuildRequires:	kdelibs-devel
