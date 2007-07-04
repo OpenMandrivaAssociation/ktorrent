@@ -27,7 +27,7 @@ Source0:	http://ktorrent.org/downloads/%{version}/%{name}-%{version}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	gmp-devel
 BuildRequires:	kdelibs-devel
-BuildRequires:	mandriva-create-kde-mdk-menu
+BuildRequires:	desktop-file-utils
 Obsoletes:	%{_lib}ktorrent0 %{_lib}ktorrent2.1 %{_lib}ktorrent2.1.1
 Obsoletes:	%{_lib}ktorrent2.1.2 %{_lib}ktorrent2.1.3
 
@@ -48,7 +48,6 @@ KTorrent is a BitTorrent program for KDE. It's main features are:
 %{_datadir}/services/*
 %{_datadir}/servicetypes/*
 %{_datadir}/apps/%{name}
-%{_menudir}/%{name}
 %{_datadir}/applications/kde/%{name}.desktop
 %{_datadir}/config.kcfg/*.kcfg
 %{_iconsdir}/hicolor/scalable/apps/%{name}.svgz
@@ -86,8 +85,10 @@ make -f admin/Makefile.common cvs
 rm -rf $RPM_BUILD_ROOT
 %makeinstall_std
 
-install -d $RPM_BUILD_ROOT%{_menudir}
-kdedesktop2mdkmenu.pl %{name} "Internet/File transfer" $RPM_BUILD_ROOT%{_datadir}/applications/kde/%name.desktop $RPM_BUILD_ROOT%{_menudir}/%{name}
+desktop-file-install --vendor="" \
+	--add-category="P2P" \
+	--dir %{buildroot}%{_datadir}/applications/kde \
+	%{buildroot}%{_datadir}/applications/kde/ktorrent.desktop
 
 install -m644 apps/ktorrent/hi16-app-ktorrent.png -D $RPM_BUILD_ROOT%{_miconsdir}/%{name}.png
 install -m644 apps/ktorrent/hi32-app-ktorrent.png -D $RPM_BUILD_ROOT%{_iconsdir}/%{name}.png
