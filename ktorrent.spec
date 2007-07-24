@@ -1,5 +1,5 @@
 %define	name	ktorrent
-%define	version 2.2
+%define	version 2.2.1
 %define	rel	1
 
 # Note that this package does not follow the library policy as the
