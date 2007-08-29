@@ -1,5 +1,5 @@
 %define	name	ktorrent
-%define	version 2.2.1
+%define	version 2.2.2
 %define	rel	1
 
 # Note that this package does not follow the library policy as the
@@ -114,6 +114,3 @@ rm -rf $RPM_BUILD_ROOT
 %clean_menus
 %clean_desktop_database
 %clean_icon_cache hicolor
-
-# This is a workaround for #27417
-
