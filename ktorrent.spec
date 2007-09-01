@@ -39,25 +39,6 @@ KTorrent is a BitTorrent program for KDE. It's main features are:
  o Internet searching using  The Bittorrent website's search engine
  o UDP Trackers
 
-%files -f %{name}.lang
-%defattr(-,root,root)
-%doc AUTHORS README
-%{_bindir}/*
-%{_libdir}/kde3/*
-%{_libdir}/libktorrent-%major.so
-%{_datadir}/services/*
-%{_datadir}/servicetypes/*
-%{_datadir}/apps/%{name}
-%{_datadir}/applications/kde/%{name}.desktop
-%{_datadir}/config.kcfg/*.kcfg
-%{_iconsdir}/hicolor/scalable/apps/%{name}.svgz
-%{_miconsdir}/%{name}.png
-%{_iconsdir}/%{name}.png
-%{_liconsdir}/%{name}.png
-%{_iconsdir}/hicolor/*/apps/*.png
-%{_iconsdir}/hicolor/*/mimetypes/*.png
-%{_iconsdir}/hicolor/*/mimetypes/*.svgz
-
 %prep
 %setup -q
 
@@ -114,3 +95,22 @@ rm -rf $RPM_BUILD_ROOT
 %clean_menus
 %clean_desktop_database
 %clean_icon_cache hicolor
+
+%files -f %{name}.lang
+%defattr(-,root,root)
+%doc AUTHORS README
+%{_bindir}/*
+%{_libdir}/kde3/*
+%{_libdir}/libktorrent-%major.so
+%{_datadir}/services/*
+%{_datadir}/servicetypes/*
+%{_datadir}/apps/%{name}
+%{_datadir}/applications/kde/%{name}.desktop
+%{_datadir}/config.kcfg/*.kcfg
+%{_iconsdir}/hicolor/scalable/apps/%{name}.svgz
+%{_miconsdir}/%{name}.png
+%{_iconsdir}/%{name}.png
+%{_liconsdir}/%{name}.png
+%{_iconsdir}/hicolor/*/apps/*.png
+%{_iconsdir}/hicolor/*/mimetypes/*.png
+%{_iconsdir}/hicolor/*/mimetypes/*.svgz
