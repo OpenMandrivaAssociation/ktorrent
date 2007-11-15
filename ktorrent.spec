@@ -1,5 +1,5 @@
 %define	name	ktorrent
-%define	version 2.2.2
+%define	version 2.2.3
 %define	rel	1
 
 # Note that this package does not follow the library policy as the
@@ -14,7 +14,7 @@
 # Feel free to flame me if you do not like this...
 # -Anssi
 
-%define major	%version
+%define major	2.2.2
 
 Summary:	BitTorrent program for KDE
 Name:		%{name}
