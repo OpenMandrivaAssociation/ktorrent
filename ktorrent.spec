@@ -1,5 +1,5 @@
 %define	name	ktorrent
-%define	version 2.2.3
+%define	version 2.2.4
 %define	rel	1
 
 # Note that this package does not follow the library policy as the
@@ -14,14 +14,14 @@
 # Feel free to flame me if you do not like this...
 # -Anssi
 
-%define major	2.2.2
+%define major %version
 
 Summary:	BitTorrent program for KDE
 Name:		%{name}
 Version:	%{version}
 Release:	%mkrel %{rel}
 Group:		Networking/File transfer
-License:	GPL
+License:	GPLv2+
 Url:		http://ktorrent.org/
 Source0:	http://ktorrent.org/downloads/%{version}/%{name}-%{version}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
