@@ -24,7 +24,6 @@ Group:		Networking/File transfer
 License:	GPLv2+
 Url:		http://ktorrent.org/
 Source0:	http://ktorrent.org/downloads/%{version}/%{name}-%{version}.tar.gz
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	gmp-devel
 BuildRequires:	kdelibs-devel
 BuildRequires:	desktop-file-utils
