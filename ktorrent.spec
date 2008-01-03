@@ -1,6 +1,6 @@
 %define	name	ktorrent
 %define	version 2.2.4
-%define	rel	1
+%define	rel	2
 
 # Note that this package does not follow the library policy as the
 # main package includes the libktorrent shared object. This is done
