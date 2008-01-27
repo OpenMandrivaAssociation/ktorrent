@@ -1,6 +1,6 @@
 %define	name	ktorrent
-%define	version 2.2.4
-%define	rel	2
+%define	version 2.2.5
+%define	rel	1
 
 # Note that this package does not follow the library policy as the
 # main package includes the libktorrent shared object. This is done
@@ -23,7 +23,7 @@ Release:	%mkrel %{rel}
 Group:		Networking/File transfer
 License:	GPLv2+
 Url:		http://ktorrent.org/
-Source0:	http://ktorrent.org/downloads/%{version}/%{name}-%{version}.tar.gz
+Source0:	http://ktorrent.org/downloads/%{version}/%{name}-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	gmp-devel
 BuildRequires:	kdelibs-devel
@@ -54,10 +54,7 @@ make -f admin/Makefile.common cvs
 		--disable-rpath \
 		--disable-embedded \
 		--enable-fast-install=yes \
-%if "%{_lib}" != "lib"
-    --enable-libsuffix="%(A=%{_lib}; echo ${A/lib/})" \
-%endif
-		--with-qt-dir=%{_prefix}/lib/qt3 \
+		--with-qt-dir=%{qt3dir} \
 		--with-xinerama \
 		--enable-final
 %make
