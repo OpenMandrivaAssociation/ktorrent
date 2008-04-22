@@ -1,35 +1,19 @@
-%define	name	ktorrent
-%define	version 2.2.5
-%define	rel	1
-
-# Note that this package does not follow the library policy as the
-# main package includes the libktorrent shared object. This is done
-# because 1) the library is only used internally by ktorrent, and so
-# it does never need to be installed separately, and 2) the %major
-# follows %version, thus resulting in one unuseful library package
-# in every ktorrent version upgrade. The only downside of not
-# following the library policy on this particular package I know is
-# rpmlint going nuts.
-#
-# Feel free to flame me if you do not like this...
-# -Anssi
-
 %define major %version
 
+Name: ktorrent
+Version:	3.0.1
+Release:	%mkrel 1
 Summary:	BitTorrent program for KDE
-Name:		%{name}
-Version:	%{version}
-Release:	%mkrel %{rel}
-Group:		Networking/File transfer
+Group: Networking/File transfer
 License:	GPLv2+
 Url:		http://ktorrent.org/
 Source0:	http://ktorrent.org/downloads/%{version}/%{name}-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	gmp-devel
-BuildRequires:	kdelibs-devel
-BuildRequires:	desktop-file-utils
+BuildRequires:	kdelibs4-devel
 Obsoletes:	%{_lib}ktorrent0 %{_lib}ktorrent2.1 %{_lib}ktorrent2.1.1
 Obsoletes:	%{_lib}ktorrent2.1.2 %{_lib}ktorrent2.1.3
+
 
 %description
 KTorrent is a BitTorrent program for KDE. It's main features are:
@@ -43,71 +27,36 @@ KTorrent is a BitTorrent program for KDE. It's main features are:
 %setup -q
 
 %build
-make -f admin/Makefile.common cvs
-%configure2_5x	--disable-debug \
-		--enable-mt \
-		--disable-static \
-		--enable-shared \
-		--disable-objprelink \
-		--with-pic \
-		--with-gnu-ld \
-		--disable-rpath \
-		--disable-embedded \
-		--enable-fast-install=yes \
-		--with-qt-dir=%{qt3dir} \
-		--with-xinerama \
-		--enable-final
+%cmake_kde4 
+
 %make
  
 %install
-rm -rf $RPM_BUILD_ROOT
-%makeinstall_std
+rm -rf %buildroot
 
-desktop-file-install --vendor="" \
-	--add-category="P2P" \
-	--dir %{buildroot}%{_datadir}/applications/kde \
-	%{buildroot}%{_datadir}/applications/kde/ktorrent.desktop
-
-install -m644 apps/ktorrent/hi16-app-ktorrent.png -D $RPM_BUILD_ROOT%{_miconsdir}/%{name}.png
-install -m644 apps/ktorrent/hi32-app-ktorrent.png -D $RPM_BUILD_ROOT%{_iconsdir}/%{name}.png
-install -m644 apps/ktorrent/hi48-app-ktorrent.png -D $RPM_BUILD_ROOT%{_liconsdir}/%{name}.png
+make -C build DESTDIR=%buildroot install  
 
 %find_lang %{name}
-rm -f $RPM_BUILD_ROOT%{_libdir}/libktorrent.{so,la}
-
-#Fix Conflictss with kdelibs-common
-rm -f $RPM_BUILD_ROOT%{_datadir}/mimelnk/application/x-bittorrent.desktop
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %buildroot
 
 %post
 /sbin/ldconfig
 %update_menus
-%update_desktop_database
-%update_icon_cache hicolor
 
 %postun
 /sbin/ldconfig
 %clean_menus
-%clean_desktop_database
-%clean_icon_cache hicolor
 
 %files -f %{name}.lang
 %defattr(-,root,root)
 %doc AUTHORS README
 %{_bindir}/*
-%{_libdir}/kde3/*
-%{_libdir}/libktorrent-%major.so
+%{_libdir}/kde4/*
 %{_datadir}/services/*
 %{_datadir}/servicetypes/*
 %{_datadir}/apps/%{name}
-%{_datadir}/applications/kde/%{name}.desktop
+%{_datadir}/applications/kde/*
 %{_datadir}/config.kcfg/*.kcfg
-%{_iconsdir}/hicolor/scalable/apps/%{name}.svgz
-%{_miconsdir}/%{name}.png
-%{_iconsdir}/%{name}.png
-%{_liconsdir}/%{name}.png
-%{_iconsdir}/hicolor/*/apps/*.png
-%{_iconsdir}/hicolor/*/mimetypes/*.png
-%{_iconsdir}/hicolor/*/mimetypes/*.svgz
+%{_iconsdir}/*/*/*/*
