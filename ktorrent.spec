@@ -48,7 +48,8 @@ KTorrent is a BitTorrent program for KDE. It's main features are:
 
 #-------------------------------------------------------------------------
 
-%define libbtcore %mklibname btcore 3
+%define btcore_major 4
+%define libbtcore %mklibname btcore %btcore_major
 
 %package -n %libbtcore
 Summary: Ktorrent libbrary
@@ -62,11 +63,12 @@ KTorrent library.
 
 %files -n %libbtcore
 %defattr(-,root,root)
-%{_kde_libdir}/libbtcore.so.*
+%{_kde_libdir}/libbtcore.so.%{btcore_major}*
 
 #-------------------------------------------------------------------------
 
-%define libktcore %mklibname ktcore 3
+%define ktcore_major 4
+%define libktcore %mklibname ktcore %ktcore_major
 
 %package -n %libktcore
 Summary: Ktorrent libbrary
@@ -80,11 +82,12 @@ KTorrent library.
 
 %files -n %libktcore
 %defattr(-,root,root)
-%{_kde_libdir}/libktcore.so.*
+%{_kde_libdir}/libktcore.so.%{ktcore_major}*
 
 #-------------------------------------------------------------------------
 
-%define libktupnp %mklibname ktupnp 1
+%define ktupnp_major 1
+%define libktupnp %mklibname ktupnp %ktupnp_major
 
 %package -n %libktupnp
 Summary: Ktorrent libbrary
@@ -98,7 +101,7 @@ KTorrent library.
 
 %files -n %libktupnp
 %defattr(-,root,root)
-%{_kde_libdir}/libktupnp.so.*
+%{_kde_libdir}/libktupnp.so.%{ktupnp_major}*
 
 #-------------------------------------------------------------------------
 
