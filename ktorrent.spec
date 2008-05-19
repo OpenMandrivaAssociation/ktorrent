@@ -2,12 +2,12 @@
 
 Name: ktorrent
 Version: 3.1
-Release: %mkrel 0.beta1.2
+Release: %mkrel 0.beta2.1
 Summary: BitTorrent program for KDE
 Group: Networking/File transfer
 License: GPLv2+
 Url: http://ktorrent.org/
-Source0: http://ktorrent.org/downloads/%{version}/%{name}-%{version}beta1.tar.bz2
+Source0: http://ktorrent.org/downloads/%{version}/%{name}-%{version}beta2.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: gmp-devel
 BuildRequires: kdelibs4-devel
