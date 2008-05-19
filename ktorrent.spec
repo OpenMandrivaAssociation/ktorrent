@@ -127,7 +127,7 @@ Ktorrent plugin devel headers.
 #-------------------------------------------------------------------------
 
 %prep
-%setup -q -n %name-%{version}beta1
+%setup -q -n %name-%{version}beta2
 
 %build
 %cmake_kde4 
