@@ -72,7 +72,7 @@ KTorrent library.
 
 #-------------------------------------------------------------------------
 
-%define ktcore_major 4
+%define ktcore_major 5
 %define libktcore %mklibname ktcore %ktcore_major
 
 %package -n %libktcore
@@ -81,6 +81,7 @@ Group:      System/Libraries
 Obsoletes:  %{_lib}ktcore1 < 4.0.0-2
 Obsoletes:  %{_lib}ktcore2 < 3.0-0.rc1.3
 Obsoletes:  %{_lib}ktcore3 < 3.1-0.beta1.2
+Obsoletes:  %{_lib}ktcore4 < 3.1-0.beta2.1
 
 %description -n %libktcore
 KTorrent library.
