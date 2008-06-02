@@ -1,5 +1,5 @@
 %define major %version
-%define pre   beta2
+%define pre   rc1
 
 Name: ktorrent
 Version: 3.1
@@ -12,7 +12,7 @@ Source0: http://ktorrent.org/downloads/%{version}/%{name}-%{version}%{pre}.tar.b
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: gmp-devel
 BuildRequires: kdelibs4-devel
-BuildRequires: qca2-devel
+BuildRequires: qca2-devel >= 2.0.1
 Obsoletes: %{_lib}ktorrent0 
 Obsoletes: %{_lib}ktorrent2.1 
 Obsoletes: %{_lib}ktorrent2.1.1
@@ -49,7 +49,7 @@ KTorrent is a BitTorrent program for KDE. It's main features are:
 
 #-------------------------------------------------------------------------
 
-%define btcore_major 5
+%define btcore_major 6
 %define libbtcore %mklibname btcore %btcore_major
 
 %package -n %libbtcore
@@ -72,7 +72,7 @@ KTorrent library.
 
 #-------------------------------------------------------------------------
 
-%define ktcore_major 5
+%define ktcore_major 6
 %define libktcore %mklibname ktcore %ktcore_major
 
 %package -n %libktcore
@@ -95,7 +95,7 @@ KTorrent library.
 
 #-------------------------------------------------------------------------
 
-%define ktupnp_major 2
+%define ktupnp_major 3
 %define libktupnp %mklibname ktupnp %ktupnp_major
 
 %package -n %libktupnp
