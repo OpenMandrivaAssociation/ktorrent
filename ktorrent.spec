@@ -63,8 +63,12 @@ Obsoletes:  %{_lib}btcore4 < 3.1-0.beta2.1
 %description -n %libbtcore
 KTorrent library.
 
+%if %mdkversion < 200900
 %post -n %libbtcore -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %libbtcore -p /sbin/ldconfig
+%endif
 
 %files -n %libbtcore
 %defattr(-,root,root)
@@ -86,8 +90,12 @@ Obsoletes:  %{_lib}ktcore4 < 3.1-0.beta2.1
 %description -n %libktcore
 KTorrent library.
 
+%if %mdkversion < 200900
 %post -n %libktcore -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %libktcore -p /sbin/ldconfig
+%endif
 
 %files -n %libktcore
 %defattr(-,root,root)
@@ -106,8 +114,12 @@ Obsoletes:  %{_lib}ktupnp1 < 3.1-0.beta2.1
 %description -n %libktupnp
 KTorrent library.
 
+%if %mdkversion < 200900
 %post -n %libktupnp -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %libktupnp -p /sbin/ldconfig
+%endif
 
 %files -n %libktupnp
 %defattr(-,root,root)
