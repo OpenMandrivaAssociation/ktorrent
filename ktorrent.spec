@@ -1,14 +1,13 @@
 %define major %version
-%define pre   rc1
 
 Name: ktorrent
 Version: 3.1
-Release: %mkrel 0.%{pre}.1
+Release: %mkrel 1
 Summary: BitTorrent program for KDE
 Group: Networking/File transfer
 License: GPLv2+
 Url: http://ktorrent.org/
-Source0: http://ktorrent.org/downloads/%{version}/%{name}-%{version}%{pre}.tar.bz2
+Source0: http://ktorrent.org/downloads/%{version}/%{name}-%{version}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: gmp-devel
 BuildRequires: kdelibs4-devel
@@ -143,7 +142,7 @@ Ktorrent plugin devel headers.
 #-------------------------------------------------------------------------
 
 %prep
-%setup -q -n %name-%{version}%{pre}
+%setup -q -n %name-%{version}
 
 %build
 %cmake_kde4 
