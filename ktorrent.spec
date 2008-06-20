@@ -28,13 +28,17 @@ KTorrent is a BitTorrent program for KDE. It's main features are:
  o Internet searching using  The Bittorrent website's search engine
  o UDP Trackers
 
+%if %mdkversion < 200900
 %post
 %update_desktop_database
 %update_icon_cache hicolor
+%endif
 
+%if %mdkversion < 200900
 %postun
 %clean_desktop_database
 %clean_icon_cache hicolor
+%endif
 
 %files -f %{name}.lang
 %defattr(-,root,root)
