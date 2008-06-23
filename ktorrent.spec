@@ -2,7 +2,7 @@
 
 Name: ktorrent
 Version: 3.1
-Release: %mkrel 2
+Release: %mkrel 3
 Summary: BitTorrent program for KDE
 Group: Networking/File transfer
 License: GPLv2+
@@ -17,8 +17,8 @@ Obsoletes: %{_lib}ktorrent2.1
 Obsoletes: %{_lib}ktorrent2.1.1
 Obsoletes: %{_lib}ktorrent2.1.2 
 Obsoletes: %{_lib}ktorrent2.1.3
-Obsoletes: kde4-ktorrent < 1:3.0.1
-Provides:  kde4-ktorrent = 1:%version
+Obsoletes: kde4-ktorrent < 1:%version-%release
+Provides:  kde4-ktorrent = 1:%version-%release
 
 %description
 KTorrent is a BitTorrent program for KDE. It's main features are:
