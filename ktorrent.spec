@@ -52,7 +52,7 @@ KTorrent is a BitTorrent program for KDE. It's main features are:
 
 #-------------------------------------------------------------------------
 
-%define btcore_major 6
+%define btcore_major 7
 %define libbtcore %mklibname btcore %btcore_major
 
 %package -n %libbtcore
@@ -62,6 +62,7 @@ Obsoletes:  %{_lib}btcore1 < 4.0.0-2
 Obsoletes:  %{_lib}btcore2 < 3.0-0.rc1.3
 Obsoletes:  %{_lib}btcore3 < 3.1-0.beta1.2
 Obsoletes:  %{_lib}btcore4 < 3.1-0.beta2.1
+Obsoletes:  %{_lib}btcore6 < 3.1.1
 
 %description -n %libbtcore
 KTorrent library.
