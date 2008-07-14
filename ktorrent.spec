@@ -62,6 +62,7 @@ Obsoletes:  %{_lib}btcore1 < 4.0.0-2
 Obsoletes:  %{_lib}btcore2 < 3.0-0.rc1.3
 Obsoletes:  %{_lib}btcore3 < 3.1-0.beta1.2
 Obsoletes:  %{_lib}btcore4 < 3.1-0.beta2.1
+Obsoletes:  %{_lib}btcore5 < 3.1
 Obsoletes:  %{_lib}btcore6 < 3.1.1
 
 %description -n %libbtcore
