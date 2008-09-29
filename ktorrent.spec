@@ -8,6 +8,7 @@ Group: Networking/File transfer
 License: GPLv2+
 Url: http://ktorrent.org/
 Source0: http://ktorrent.org/downloads/%{version}/%{name}-%{version}.tar.bz2
+Patch0: ktorrent-3.1.3-missing-include.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: gmp-devel
 BuildRequires: kdelibs4-devel
@@ -149,6 +150,7 @@ Ktorrent plugin devel headers.
 
 %prep
 %setup -q -n %name-%{version}
+%patch0 -p0
 
 %build
 %cmake_kde4 
