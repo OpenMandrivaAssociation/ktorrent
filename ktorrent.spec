@@ -1,7 +1,7 @@
 %define major %version
 
 Name: ktorrent
-Version: 3.1.3
+Version: 3.1.4
 Release: %mkrel 1
 Summary: BitTorrent program for KDE
 Group: Networking/File transfer
