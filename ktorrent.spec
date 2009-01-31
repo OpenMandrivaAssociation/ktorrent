@@ -1,15 +1,14 @@
 %define major %version
-%define beta beta1
+%define beta rc1
 
 Name: ktorrent
 Version: 3.2
-Release: %mkrel -c %beta 4
+Release: %mkrel -c %beta 1
 Summary: BitTorrent program for KDE
 Group: Networking/File transfer
 License: GPLv2+
 Url: http://ktorrent.org/
 Source0: http://ktorrent.org/downloads/%{version}/%{name}-%{version}%{beta}.tar.bz2
-Patch0:  ktorrent-3.2beta1-fix-cmake.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: gmp-devel
 BuildRequires: kdepimlibs4-devel
@@ -56,7 +55,7 @@ KTorrent is a BitTorrent program for KDE. It's main features are:
 
 #-------------------------------------------------------------------------
 
-%define btcore_major 8
+%define btcore_major 9
 %define libbtcore %mklibname btcore %btcore_major
 
 %package -n %libbtcore
@@ -85,7 +84,7 @@ KTorrent library.
 
 #-------------------------------------------------------------------------
 
-%define ktcore_major 7
+%define ktcore_major 8
 %define libktcore %mklibname ktcore %ktcore_major
 
 %package -n %libktcore
@@ -112,7 +111,7 @@ KTorrent library.
 
 #-------------------------------------------------------------------------
 
-%define ktupnp_major 3
+%define ktupnp_major 4
 %define libktupnp %mklibname ktupnp %ktupnp_major
 
 %package -n %libktupnp
@@ -153,7 +152,7 @@ Ktorrent plugin devel headers.
 
 %prep
 %setup -q -n %name-%{version}%{beta}
-%patch0 -p1
+
 %build
 %cmake_kde4 
 %make
