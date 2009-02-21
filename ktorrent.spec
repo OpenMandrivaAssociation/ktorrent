@@ -1,9 +1,8 @@
-%define major %version
-%define beta rc1
+%define beta %nil
 
 Name: ktorrent
 Version: 3.2
-Release: %mkrel -c %beta 1
+Release: %mkrel 1
 Summary: BitTorrent program for KDE
 Group: Networking/File transfer
 License: GPLv2+
