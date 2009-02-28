@@ -1,13 +1,11 @@
-%define beta %nil
-
 Name: ktorrent
 Version: 3.2
-Release: %mkrel 1
+Release: %mkrel 2
 Summary: BitTorrent program for KDE
 Group: Networking/File transfer
 License: GPLv2+
 Url: http://ktorrent.org/
-Source0: http://ktorrent.org/downloads/%{version}/%{name}-%{version}%{beta}.tar.bz2
+Source0: http://ktorrent.org/downloads/%{version}/%{name}-%{version}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: gmp-devel
 BuildRequires: kdepimlibs4-devel
@@ -30,17 +28,7 @@ KTorrent is a BitTorrent program for KDE. It's main features are:
  o Internet searching using  The Bittorrent website's search engine
  o UDP Trackers
 
-%if %mdkversion < 200900
-%post
-%update_desktop_database
-%update_icon_cache hicolor
-%endif
-
-%if %mdkversion < 200900
-%postun
-%clean_desktop_database
-%clean_icon_cache hicolor
-%endif
+#-------------------------------------------------------------------------
 
 %files -f %{name}.lang
 %defattr(-,root,root)
