@@ -1,5 +1,5 @@
 Name: ktorrent
-Version: 3.2.5
+Version: 3.3
 Release: %mkrel 1
 Summary: BitTorrent program for KDE
 Group: Networking/File transfer
@@ -43,7 +43,7 @@ KTorrent is a BitTorrent program for KDE. It's main features are:
 
 #-------------------------------------------------------------------------
 
-%define btcore_major 11
+%define btcore_major 12
 %define libbtcore %mklibname btcore %btcore_major
 
 %package -n %libbtcore
@@ -72,7 +72,7 @@ KTorrent library.
 
 #-------------------------------------------------------------------------
 
-%define ktcore_major 9
+%define ktcore_major 10
 %define libktcore %mklibname ktcore %ktcore_major
 
 %package -n %libktcore
