@@ -1,6 +1,6 @@
 Name: ktorrent
 Version: 3.3
-Release: %mkrel 2
+Release: %mkrel 3
 Summary: BitTorrent program for KDE
 Group: Networking/File transfer
 License: GPLv2+
