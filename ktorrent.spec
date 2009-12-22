@@ -1,11 +1,13 @@
+%define rev beta1
+
 Name: ktorrent
-Version: 3.3.2
-Release: %mkrel 1
+Version: 4.0
+Release: %mkrel 0.%rev.1
 Summary: BitTorrent program for KDE
 Group: Networking/File transfer
 License: GPLv2+
 Url: http://ktorrent.org/
-Source0: http://ktorrent.org/downloads/%{version}/%{name}-%{version}.tar.bz2
+Source0: http://ktorrent.org/downloads/%{version}/%{name}-%{version}%{rev}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: gmp-devel
 BuildRequires: kdepimlibs4-devel
@@ -43,7 +45,7 @@ KTorrent is a BitTorrent program for KDE. It's main features are:
 
 #-------------------------------------------------------------------------
 
-%define btcore_major 12
+%define btcore_major 13
 %define libbtcore %mklibname btcore %btcore_major
 
 %package -n %libbtcore
@@ -61,13 +63,6 @@ Obsoletes:  %{_lib}btcore11 < 3.2.5
 
 %description -n %libbtcore
 KTorrent library.
-
-%if %mdkversion < 200900
-%post -n %libbtcore -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %libbtcore -p /sbin/ldconfig
-%endif
 
 %files -n %libbtcore
 %defattr(-,root,root)
@@ -91,13 +86,6 @@ Obsoletes:  %{_lib}btcore9 < 3.2.5
 %description -n %libktcore
 KTorrent library.
 
-%if %mdkversion < 200900
-%post -n %libktcore -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %libktcore -p /sbin/ldconfig
-%endif
-
 %files -n %libktcore
 %defattr(-,root,root)
 %{_kde_libdir}/libktcore.so.%{ktcore_major}*
@@ -114,13 +102,6 @@ Obsoletes:  %{_lib}ktupnp1 < 3.1-0.beta2.1
 
 %description -n %libktupnp
 KTorrent library.
-
-%if %mdkversion < 200900
-%post -n %libktupnp -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %libktupnp -p /sbin/ldconfig
-%endif
 
 %files -n %libktupnp
 %defattr(-,root,root)
@@ -147,7 +128,7 @@ Ktorrent plugin devel headers.
 #-------------------------------------------------------------------------
 
 %prep
-%setup -q
+%setup -q -n %name-%version%rev
 
 %build
 %cmake_kde4 
