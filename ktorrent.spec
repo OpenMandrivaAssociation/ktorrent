@@ -59,7 +59,8 @@ Obsoletes:  %{_lib}btcore5 < 3.1
 Obsoletes:  %{_lib}btcore6 < 3.1.1
 Obsoletes:  %{_lib}btcore9 < 3.2
 Obsoletes:  %{_lib}btcore10 < 3.2.5
-Obsoletes:  %{_lib}btcore11 < 3.2.5
+Obsoletes:  %{_lib}btcore11 < 3.3.0
+Obsoletes:  %{_lib}btcore12 < 4.0
 
 %description -n %libbtcore
 KTorrent library.
@@ -81,7 +82,7 @@ Obsoletes:  %{_lib}ktcore2 < 3.0-0.rc1.3
 Obsoletes:  %{_lib}ktcore3 < 3.1-0.beta1.2
 Obsoletes:  %{_lib}ktcore4 < 3.1-0.beta2.1
 Obsoletes:  %{_lib}btcore8 < 3.2
-Obsoletes:  %{_lib}btcore9 < 3.2.5
+Obsoletes:  %{_lib}btcore9 < 4.0
 
 %description -n %libktcore
 KTorrent library.
