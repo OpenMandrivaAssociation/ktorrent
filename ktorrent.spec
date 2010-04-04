@@ -1,8 +1,8 @@
-%define rev beta1
+%define rev beta2
 
 Name: ktorrent
 Version: 4.0
-Release: %mkrel 0.%rev.2
+Release: %mkrel 0.%rev.1
 Summary: BitTorrent program for KDE
 Group: Networking/File transfer
 License: GPLv2+
@@ -69,7 +69,7 @@ KTorrent library.
 
 #-------------------------------------------------------------------------
 
-%define ktcore_major 10
+%define ktcore_major 11
 %define libktcore %mklibname ktcore %ktcore_major
 
 %package -n %libktcore
