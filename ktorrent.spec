@@ -1,4 +1,4 @@
-%define rev beta2
+%define rev rc1
 
 Name: ktorrent
 Version: 4.0
@@ -15,6 +15,7 @@ BuildRequires: kdebase4-workspace-devel
 BuildRequires: qca2-devel >= 2.0.1
 BuildRequires: boost-devel
 BuildRequires: taglib-devel
+BuildRequires: libktorrent-devel
 Obsoletes: %{_lib}ktorrent0 
 Obsoletes: %{_lib}ktorrent2.1 
 Obsoletes: %{_lib}ktorrent2.1.1
@@ -40,32 +41,6 @@ KTorrent is a BitTorrent program for KDE. It's main features are:
 %{_kde_services}/*
 %{_kde_servicetypes}/*
 %{_kde_iconsdir}/*/*/*/*
-
-#-------------------------------------------------------------------------
-
-%define btcore_major 13
-%define libbtcore %mklibname btcore %btcore_major
-
-%package -n %libbtcore
-Summary:    Ktorrent libbrary
-Group:      System/Libraries
-Obsoletes:  %{_lib}btcore1 < 4.0.0-2
-Obsoletes:  %{_lib}btcore2 < 3.0-0.rc1.3
-Obsoletes:  %{_lib}btcore3 < 3.1-0.beta1.2
-Obsoletes:  %{_lib}btcore4 < 3.1-0.beta2.1
-Obsoletes:  %{_lib}btcore5 < 3.1
-Obsoletes:  %{_lib}btcore6 < 3.1.1
-Obsoletes:  %{_lib}btcore9 < 3.2
-Obsoletes:  %{_lib}btcore10 < 3.2.5
-Obsoletes:  %{_lib}btcore11 < 3.3.0
-Obsoletes:  %{_lib}btcore12 < 4.0
-
-%description -n %libbtcore
-KTorrent library.
-
-%files -n %libbtcore
-%defattr(-,root,root)
-%{_kde_libdir}/libbtcore.so.%{btcore_major}*
 
 #-------------------------------------------------------------------------
 
@@ -111,7 +86,6 @@ KTorrent library.
 %package devel
 Summary: Ktorrent plugin devel headers
 Group: Networking/File transfer
-Requires: %{libbtcore} = %{version}
 Requires: %{libktcore} = %{version}
 Requires: %{libktupnp} = %{version}
 
@@ -120,8 +94,6 @@ Ktorrent plugin devel headers.
 
 %files devel
 %defattr(-,root,root)
-%{_kde_includedir}/*
-%{_kde_appsdir}/cmake/*/*
 %{_kde_libdir}/*.so
 
 #-------------------------------------------------------------------------
