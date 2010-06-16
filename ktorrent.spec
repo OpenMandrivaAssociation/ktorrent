@@ -1,6 +1,6 @@
 Name: ktorrent
 Version: 4.0.1
-Release: %mkrel 1
+Release: %mkrel 2
 Summary: BitTorrent program for KDE
 Group: Networking/File transfer
 License: GPLv2+
@@ -109,8 +109,10 @@ Ktorrent plugin devel headers.
 rm -rf %buildroot
 %makeinstall_std -C build
 
+# make it preferred over kget:
+echo "InitialPreference=5" >> %{buildroot}%{_kde_applicationsdir}/ktorrent.desktop
+
 %find_lang %{name}
 
 %clean
 rm -rf %buildroot
-
