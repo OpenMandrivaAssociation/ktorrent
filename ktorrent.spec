@@ -10,7 +10,7 @@ Patch0: ktorrent-4.0.1-ktcore-dso-fix.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: gmp-devel
 BuildRequires: kdepimlibs4-devel
-BuildRequires: kdebase4-workspace-devel
+BuildRequires: kdebase4-workspace-devel >= 4.4.0
 BuildRequires: qca2-devel >= 2.0.1
 BuildRequires: boost-devel
 BuildRequires: taglib-devel
