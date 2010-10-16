@@ -23,7 +23,7 @@ Obsoletes: kde4-ktorrent < 1:%version-%release
 Provides:  kde4-ktorrent = 1:%version-%release
 
 %description
-KTorrent is a BitTorrent program for KDE. It's main features are:
+KTorrent is a BitTorrent program for KDE. Its main features are:
  o Downloads torrent files
  o Upload speed capping, seeing that most people can't upload
    infinite amounts of data.
