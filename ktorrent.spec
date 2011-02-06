@@ -38,6 +38,7 @@ KTorrent is a BitTorrent program for KDE. Its main features are:
 %{_kde_libdir}/kde4/*
 %{_kde_datadir}/apps/%{name}
 %{_kde_datadir}/applications/kde4/*
+%{_kde_datadir}/config.kcfg/*.kcfg
 %{_kde_services}/*
 %{_kde_servicetypes}/*
 %{_kde_iconsdir}/*/*/*/*
@@ -94,7 +95,7 @@ rm -rf %buildroot
 # make it preferred over kget:
 echo "InitialPreference=5" >> %{buildroot}%{_kde_applicationsdir}/ktorrent.desktop
 
-%find_lang %{name}
+%find_lang %{name} --with-html
 
 %clean
 rm -rf %buildroot
