@@ -1,11 +1,13 @@
+%define prever rc1
+
 Name: ktorrent
-Version: 4.0.5
-Release: %mkrel 1
+Version: 4.1
+Release: %mkrel -c %prever 1
 Summary: BitTorrent program for KDE
 Group: Networking/File transfer
 License: GPLv2+
 Url: http://ktorrent.org/
-Source0: http://ktorrent.org/downloads/%{version}/%{name}-%{version}.tar.bz2
+Source0: http://ktorrent.org/downloads/%{version}/%{name}-%{version}%{?prever}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: gmp-devel
 BuildRequires: kdepimlibs4-devel
@@ -13,7 +15,7 @@ BuildRequires: kdebase4-workspace-devel >= 4.4.0
 BuildRequires: qca2-devel >= 2.0.1
 BuildRequires: boost-devel
 BuildRequires: taglib-devel
-BuildRequires: libktorrent-devel >= 1.0.0
+BuildRequires: libktorrent-devel >= 1.1
 Obsoletes: %{_lib}ktorrent0 
 Obsoletes: %{_lib}ktorrent2.1 
 Obsoletes: %{_lib}ktorrent2.1.1
@@ -42,7 +44,7 @@ KTorrent is a BitTorrent program for KDE. Its main features are:
 
 #-------------------------------------------------------------------------
 
-%define ktcore_major 11
+%define ktcore_major 12
 %define libktcore %mklibname ktcore %ktcore_major
 
 %package -n %libktcore
@@ -64,28 +66,10 @@ KTorrent library.
 
 #-------------------------------------------------------------------------
 
-%define ktupnp_major 4
-%define libktupnp %mklibname ktupnp %ktupnp_major
-
-%package -n %libktupnp
-Summary: Ktorrent libbrary
-Group: System/Libraries
-Obsoletes:  %{_lib}ktupnp1 < 3.1-0.beta2.1
-
-%description -n %libktupnp
-KTorrent library.
-
-%files -n %libktupnp
-%defattr(-,root,root)
-%{_kde_libdir}/libktupnp.so.%{ktupnp_major}*
-
-#-------------------------------------------------------------------------
-
 %package devel
 Summary: Ktorrent plugin devel headers
 Group: Networking/File transfer
 Requires: %{libktcore} = %{version}
-Requires: %{libktupnp} = %{version}
 
 %description devel
 Ktorrent plugin devel headers.
@@ -97,7 +81,7 @@ Ktorrent plugin devel headers.
 #-------------------------------------------------------------------------
 
 %prep
-%setup -q -n %name-%version
+%setup -q -n %name-%version%{?prever}
 
 %build
 %cmake_kde4 
