@@ -1,11 +1,12 @@
 Name: ktorrent
 Version: 4.1.1
-Release: %mkrel 2
+Release: %mkrel 3
 Summary: BitTorrent program for KDE
 Group: Networking/File transfer
 License: GPLv2+
 Url: http://ktorrent.org/
 Source0: http://ktorrent.org/downloads/%{version}/%{name}-%{version}.tar.bz2
+Patch0: russian-translation.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: gmp-devel
 BuildRequires: kdepimlibs4-devel
@@ -81,6 +82,7 @@ Ktorrent plugin devel headers.
 
 %prep
 %setup -q -n %name-%version
+%patch0 -p1
 
 %build
 %cmake_kde4 
