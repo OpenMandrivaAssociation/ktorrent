@@ -1,5 +1,5 @@
 Name:		ktorrent
-Version:	4.3.0
+Version:	4.3.1
 Release:	1
 Summary:	BitTorrent program for KDE
 Group:		Networking/File transfer
