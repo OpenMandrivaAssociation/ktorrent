@@ -6,6 +6,7 @@ Group:		Networking/File transfer
 License:	GPLv2+
 Url:		http://ktorrent.org/
 Source0:	http://ktorrent.org/downloads/%{version}/%{name}-%{version}.tar.bz2
+Patch0:		ktorrent-4.3.1-add-missing-linkage.patch
 BuildRequires:	gmp-devel
 BuildRequires:	kdepimlibs4-devel
 BuildRequires:	kdebase4-workspace-devel
@@ -48,6 +49,7 @@ KTorrent library.
 
 %prep
 %setup -q
+%patch0 -p1 -b .link~
 
 %build
 %cmake_kde4
