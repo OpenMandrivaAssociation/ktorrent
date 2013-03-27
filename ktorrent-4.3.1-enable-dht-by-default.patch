@@ -1,0 +1,11 @@
+--- ktorrent-4.3.1/libktcore/ktorrent.kcfg~	2013-01-14 18:12:24.000000000 +0100
++++ ktorrent-4.3.1/libktcore/ktorrent.kcfg	2013-03-27 05:31:39.000702539 +0100
+@@ -127,7 +127,7 @@
+ 		</entry>
+ 		<entry name="dhtSupport" type="Bool">
+ 			<label>Support for DHT</label>
+-			<default>false</default>
++			<default>true</default>
+ 		</entry>
+ 		<entry name="dhtPort" type="Int">
+ 		     <label>DHT port</label>

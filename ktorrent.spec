@@ -1,12 +1,16 @@
 Name:		ktorrent
 Version:	4.3.1
-Release:	1
+Release:	2
 Summary:	BitTorrent program for KDE
 Group:		Networking/File transfer
 License:	GPLv2+
 Url:		http://ktorrent.org/
 Source0:	http://ktorrent.org/downloads/%{version}/%{name}-%{version}.tar.bz2
 Patch0:		ktorrent-4.3.1-add-missing-linkage.patch
+# enable DHT by default as it's strongly recommended for magnet links which
+# have now become more common than .torrent files, while ktorrent also behaves
+# better now with DHT enabled than in the past
+Patch1:		ktorrent-4.3.1-enable-dht-by-default.patch
 BuildRequires:	gmp-devel
 BuildRequires:	kdepimlibs4-devel
 BuildRequires:	kdebase4-workspace-devel
@@ -50,6 +54,7 @@ KTorrent library.
 %prep
 %setup -q
 %patch0 -p1 -b .link~
+%patch1 -p1 -b .dht~
 
 %build
 %cmake_kde4
