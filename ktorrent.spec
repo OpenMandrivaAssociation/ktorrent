@@ -1,12 +1,12 @@
 Summary:	BitTorrent program for KDE
 Name:		ktorrent
-Version:	4.3.1
-Release:	11
+Version:	5.0
+Release:	1
 Group:		Networking/File transfer
 License:	GPLv2+
 Url:		http://ktorrent.org/
-Source0:	http://ktorrent.org/downloads/%{version}/%{name}-%{version}.tar.bz2
-Patch0:		ktorrent-4.3.1-add-missing-linkage.patch
+Source0:	http://download.kde.org/stable/ktorrent/5.0/%{name}-%{version}.tar.xz
+#Patch0:		ktorrent-4.3.1-add-missing-linkage.patch
 # enable DHT by default as it's strongly recommended for magnet links which
 # have now become more common than .torrent files, while ktorrent also behaves
 # better now with DHT enabled than in the past
@@ -14,11 +14,23 @@ Patch1:		ktorrent-4.3.1-enable-dht-by-default.patch
 
 BuildRequires:	boost-devel
 BuildRequires:	gmp-devel
-BuildRequires:	kdebase4-workspace-devel
-BuildRequires:	kdepimlibs4-devel
-BuildRequires:	libktorrent-devel >= 1.3.0
-BuildRequires:	pkgconfig(qca2)
+BuildRequires:	libktorrent-devel >= 2.0
+BuildRequires:	pkgconfig(qca2-qt5)
 BuildRequires:	pkgconfig(taglib)
+BuildRequires:	cmake(Qt5Script)
+BuildRequires:  cmake(KF5I18n)
+BuildRequires:  cmake(KF5Crash)
+BuildRequires:  cmake(KF5KIO)
+BuildRequires:  cmake(KF5Archive)
+BuildRequires:	cmake(KF5KDE4Support)
+BuildRequires:	cmake(KF5NotifyConfig)
+BuildRequires:	cmake(KF5KCMUtils)
+BuildRequires:	cmake(KF5Kross)
+BuildRequires:	cmake(KF5KrossUi)
+BuildRequires:	cmake(KF5WebKit)
+BuildRequires:	cmake(LibKWorkspace)
+BuildRequires:	cmake(KF5DNSSD)
+BuildRequires:	cmake(KF5IconThemes)
 
 %description
 KTorrent is a BitTorrent program for KDE. Its main features are:
@@ -29,17 +41,16 @@ KTorrent is a BitTorrent program for KDE. Its main features are:
  o UDP Trackers
 
 %files -f %{name}.lang
-%{_kde_bindir}/*
-%{_kde_libdir}/kde4/*
-%{_kde_datadir}/apps/%{name}
-%{_kde_datadir}/applications/kde4/*
-%{_kde_services}/*
-%{_kde_servicetypes}/*
-%{_kde_iconsdir}/*/*/*/*
+%{_kde5_bindir}/*
+%{_kde5_libdir}/qt5/plugins/%{name}/
+%{_kde5_notificationsdir}5/%{name}.notifyrc
+%{_kde5_xmlguidir}/%{name}/*.rc
+%{_kde5_applicationsdir}/org.kde.ktorrent.desktop
+%{_kde5_iconsdir}/*/*/*/*
 
 #-------------------------------------------------------------------------
 
-%define ktcore_major 15
+%define ktcore_major 16
 %define libktcore %mklibname ktcore %{ktcore_major}
 
 %package -n %{libktcore}
@@ -50,21 +61,20 @@ Group:		System/Libraries
 KTorrent library.
 
 %files -n %{libktcore}
-%{_kde_libdir}/libktcore.so.%{ktcore_major}*
+%{_kde5_libdir}/libktcore.so.%{ktcore_major}*
 
 %prep
 %setup -q
 %apply_patches
 
 %build
-%cmake_kde4  -DCMAKE_MINIMUM_REQUIRED_VERSION=2.6
-%make
+%cmake_kde5  -DCMAKE_MINIMUM_REQUIRED_VERSION=2.6
+%ninja
 
 %install
-%makeinstall_std -C build
+%ninja_install -C build
 
 # make it preferred over kget:
-echo "InitialPreference=5" >> %{buildroot}%{_kde_applicationsdir}/ktorrent.desktop
+echo "InitialPreference=5" >> %{buildroot}%{_kde5_applicationsdir}/org.kde.ktorrent.desktop
 
 %find_lang %{name} --with-html
-
