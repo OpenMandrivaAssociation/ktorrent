@@ -1,6 +1,6 @@
 Summary:	BitTorrent program for KDE
 Name:		ktorrent
-Version:	5.0
+Version:	5.0.1
 Release:	1
 Group:		Networking/File transfer
 License:	GPLv2+
@@ -31,6 +31,7 @@ BuildRequires:	cmake(KF5WebKit)
 BuildRequires:	cmake(LibKWorkspace)
 BuildRequires:	cmake(KF5DNSSD)
 BuildRequires:	cmake(KF5IconThemes)
+BuildRequires:	cmake(KF5Plotting)
 
 %description
 KTorrent is a BitTorrent program for KDE. Its main features are:
