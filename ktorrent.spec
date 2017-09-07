@@ -1,6 +1,6 @@
 Summary:	BitTorrent program for KDE
 Name:		ktorrent
-Version:	5.0.1
+Version:	5.1.0
 Release:	1
 Group:		Networking/File transfer
 License:	GPLv2+
