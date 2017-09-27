@@ -14,7 +14,7 @@ Patch1:		ktorrent-4.3.1-enable-dht-by-default.patch
 
 BuildRequires:	boost-devel
 BuildRequires:	gmp-devel
-BuildRequires:	libktorrent-devel >= 2.0
+BuildRequires:	libktorrent-devel >= 2.1
 BuildRequires:	pkgconfig(qca2-qt5)
 BuildRequires:	pkgconfig(taglib)
 BuildRequires:	cmake(Qt5Script)
