@@ -51,6 +51,7 @@ KTorrent is a BitTorrent program for KDE. Its main features are:
 %{_kde5_applicationsdir}/org.kde.ktorrent.desktop
 %{_kde5_iconsdir}/*/*/*/*
 %{_datadir}/%{name}
+%{_datadir}/metainfo/org.kde.ktorrent.appdata.xml
 
 
 #-------------------------------------------------------------------------
