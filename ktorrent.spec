@@ -34,6 +34,7 @@ BuildRequires:	cmake(KF5DNSSD)
 BuildRequires:	cmake(KF5IconThemes)
 BuildRequires:	cmake(KF5Plotting)
 BuildRequires:	cmake(KF5Syndication)
+BuildRequires:	cmake(Phonon4Qt5)
 
 %description
 KTorrent is a BitTorrent program for KDE. Its main features are:
