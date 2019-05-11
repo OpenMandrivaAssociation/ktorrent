@@ -1,7 +1,7 @@
 Summary:	BitTorrent program for KDE
 Name:		ktorrent
 Version:	5.1.1
-Release:	2
+Release:	3
 Group:		Networking/File transfer
 License:	GPLv2+
 Url:		http://ktorrent.org/
@@ -11,6 +11,7 @@ Source0:	http://download.kde.org/stable/ktorrent/5.0/%{name}-%{version}.tar.xz
 # have now become more common than .torrent files, while ktorrent also behaves
 # better now with DHT enabled than in the past
 Patch1:		ktorrent-4.3.1-enable-dht-by-default.patch
+Patch2:		ktorrent-5.1.1-geoip.patch
 
 BuildRequires:	boost-devel
 BuildRequires:	gmp-devel
@@ -35,6 +36,7 @@ BuildRequires:	cmake(KF5IconThemes)
 BuildRequires:	cmake(KF5Plotting)
 BuildRequires:	cmake(KF5Syndication)
 BuildRequires:	cmake(Phonon4Qt5)
+BuildRequires:	pkgconfig(libmaxminddb)
 
 %description
 KTorrent is a BitTorrent program for KDE. Its main features are:
@@ -74,7 +76,7 @@ KTorrent library.
 %autosetup -p1
 
 %build
-%cmake_kde5  -DCMAKE_MINIMUM_REQUIRED_VERSION=2.6
+%cmake_kde5
 %ninja
 
 %install
