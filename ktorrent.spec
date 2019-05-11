@@ -37,6 +37,9 @@ BuildRequires:	cmake(KF5Plotting)
 BuildRequires:	cmake(KF5Syndication)
 BuildRequires:	cmake(Phonon4Qt5)
 BuildRequires:	pkgconfig(libmaxminddb)
+BuildRequires:	cmake ninja
+# For 2to3
+BuildRequires:	python
 
 %description
 KTorrent is a BitTorrent program for KDE. Its main features are:
@@ -74,6 +77,7 @@ KTorrent library.
 
 %prep
 %autosetup -p1
+find . -name "*.py" |xargs 2to3 -w
 
 %build
 %cmake_kde5
@@ -83,6 +87,6 @@ KTorrent library.
 %ninja_install -C build
 
 # make it preferred over kget:
-echo "InitialPreference=5" >> %{buildroot}%{_kde5_applicationsdir}/org.kde.ktorrent.desktop
+echo "InitialPreference=10" >> %{buildroot}%{_kde5_applicationsdir}/org.kde.ktorrent.desktop
 
 %find_lang %{name} --with-html

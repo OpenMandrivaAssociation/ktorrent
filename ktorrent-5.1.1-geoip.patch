@@ -1,7 +1,69 @@
+diff -up ktorrent-5.1.1/cmake/modules/FindMaxminddb.cmake.2~ ktorrent-5.1.1/cmake/modules/FindMaxminddb.cmake
+--- ktorrent-5.1.1/cmake/modules/FindMaxminddb.cmake.2~	2019-05-11 22:29:42.001192270 +0200
++++ ktorrent-5.1.1/cmake/modules/FindMaxminddb.cmake	2019-05-11 22:29:42.001192270 +0200
+@@ -0,0 +1,58 @@
++#=============================================================================
++# Copyright (c) 2019 Bernhard "Bero" Rosenkraenzer <bero@lindev.ch>
++#
++# Redistribution and use in source and binary forms, with or without
++# modification, are permitted provided that the following conditions
++# are met:
++#
++# 1. Redistributions of source code must retain the copyright
++#    notice, this list of conditions and the following disclaimer.
++# 2. Redistributions in binary form must reproduce the copyright
++#    notice, this list of conditions and the following disclaimer in the
++#    documentation and/or other materials provided with the distribution.
++# 3. The name of the author may not be used to endorse or promote products
++#    derived from this software without specific prior written permission.
++#
++# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
++# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
++# IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
++# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++# NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
++# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++#=============================================================================
++
++find_package(PkgConfig QUIET)
++pkg_check_modules(PC_MAXMINDDB QUIET libmaxminddb)
++find_path(Maxminddb_INCLUDE_DIRS NAMES maxminddb.h
++	HINTS ${PC_MAXMINDDB_INCLUDEDIR}
++)
++find_library(Maxminddb_LIBRARIES NAMES maxminddb libmaxminddb
++	HINTS ${PC_MAXMINDDB_LIBRARY_DIRS}
++)
++set(Maxminddb_VERSION ${PC_MAXMINDDB_VERSION})
++
++include(FindPackageHandleStandardArgs)
++find_package_handle_standard_args(Maxminddb
++	FOUND_VAR Maxminddb_FOUND
++	REQUIRED_VARS Maxminddb_LIBRARIES Maxminddb_INCLUDE_DIRS
++	VERSION_VAR Maxminddb_VERSION
++)
++mark_as_advanced(Maxminddb_INCLUDE_DIRS Maxminddb_LIBRARIES)
++
++if(Maxminddb_FOUND AND NOT TARGET Maxminddb::Maxminddb)
++	add_library(Maxminddb::Maxminddb UNKNOWN IMPORTED)
++	set_target_properties(Maxminddb::Maxminddb PROPERTIES
++		IMPORTED_LOCATION "${Maxminddb_LIBRARIES}"
++		INTERFACE_INCLUDE_DIRECTORIES "${Maxminddb_INCLUDE_DIRS}"
++	)
++endif()
++
++include(FeatureSummary)
++set_package_properties(Maxminddb PROPERTIES
++	URL "https://dev.maxmind.com/maxmind-db/"
++	DESCRIPTION "GeoIP lookup support"
++)
 diff -up ktorrent-5.1.1/plugins/infowidget/CMakeLists.txt.2~ ktorrent-5.1.1/plugins/infowidget/CMakeLists.txt
 --- ktorrent-5.1.1/plugins/infowidget/CMakeLists.txt.2~	2018-08-31 01:37:04.000000000 +0200
-+++ ktorrent-5.1.1/plugins/infowidget/CMakeLists.txt	2019-05-11 20:34:50.475474989 +0200
-@@ -1,31 +1,3 @@
++++ ktorrent-5.1.1/plugins/infowidget/CMakeLists.txt	2019-05-11 22:29:42.001192270 +0200
+@@ -1,30 +1,11 @@
 -# Add an option to compile & link against system GeoIP (off by default)
 -option(WITH_SYSTEM_GEOIP 
 -	"Link InfoWidget plugin against system GeoIP library and use system-wide default GeoIP Country database"
@@ -29,11 +91,18 @@ diff -up ktorrent-5.1.1/plugins/infowidget/CMakeLists.txt.2~ ktorrent-5.1.1/plug
 -	message(STATUS "   Compiling GeoIP support directly into InfoWidget plugin")
 -	set(geoip_src GeoIP.c)
 -endif(WITH_SYSTEM_GEOIP)    
--
++find_package(Maxminddb)
++set_package_properties(Maxminddb
++	PROPERTIES
++	TYPE OPTIONAL
++	PURPOSE "Required for lookup of countries of peer IPs")
++if(Maxminddb_FOUND)
++	add_definitions(-DHAVE_MAXMINDDB)
++endif()
+ 
  set(ktinfowidgetplugin_SRC 
  	infowidgetplugin.cpp 
- 	iwprefpage.cpp 
-@@ -41,7 +13,6 @@ set(ktinfowidgetplugin_SRC
+@@ -41,7 +22,6 @@ set(ktinfowidgetplugin_SRC
  	trackerview.cpp
  	trackermodel.cpp
  	addtrackersdialog.cpp
@@ -41,19 +110,19 @@ diff -up ktorrent-5.1.1/plugins/infowidget/CMakeLists.txt.2~ ktorrent-5.1.1/plug
  	geoipmanager.cpp
  	flagdb.cpp
  	iwfiletreemodel.cpp
-@@ -64,7 +35,8 @@ target_link_libraries(
+@@ -64,7 +44,8 @@ target_link_libraries(
      KF5::KIOFileWidgets
      KF5::KIOWidgets
      KF5::WidgetsAddons
 -    ${geoip_link}
 +    KF5::Archive
-+    maxminddb
++    Maxminddb::Maxminddb
  )
  install(TARGETS ktorrent_infowidget DESTINATION ${KTORRENT_PLUGIN_INSTALL_DIR} )
  
 diff -up ktorrent-5.1.1/plugins/infowidget/GeoIP.c.2~ ktorrent-5.1.1/plugins/infowidget/GeoIP.c
 --- ktorrent-5.1.1/plugins/infowidget/GeoIP.c.2~	2018-08-31 01:37:04.000000000 +0200
-+++ ktorrent-5.1.1/plugins/infowidget/GeoIP.c	2019-05-11 20:34:50.475474989 +0200
++++ ktorrent-5.1.1/plugins/infowidget/GeoIP.c	2019-05-11 22:29:42.001192270 +0200
 @@ -1,983 +0,0 @@
 -/* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
 -/* GeoIP.c
@@ -1040,7 +1109,7 @@ diff -up ktorrent-5.1.1/plugins/infowidget/GeoIP.c.2~ ktorrent-5.1.1/plugins/inf
 -}
 diff -up ktorrent-5.1.1/plugins/infowidget/GeoIP.h.2~ ktorrent-5.1.1/plugins/infowidget/GeoIP.h
 --- ktorrent-5.1.1/plugins/infowidget/GeoIP.h.2~	2018-08-31 01:37:04.000000000 +0200
-+++ ktorrent-5.1.1/plugins/infowidget/GeoIP.h	2019-05-11 20:34:50.475474989 +0200
++++ ktorrent-5.1.1/plugins/infowidget/GeoIP.h	2019-05-11 22:29:42.001192270 +0200
 @@ -1,167 +0,0 @@
 -/* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
 -/* GeoIP.h
@@ -1211,20 +1280,38 @@ diff -up ktorrent-5.1.1/plugins/infowidget/GeoIP.h.2~ ktorrent-5.1.1/plugins/inf
 -#endif /* GEOIP_H */
 diff -up ktorrent-5.1.1/plugins/infowidget/geoipmanager.cpp.2~ ktorrent-5.1.1/plugins/infowidget/geoipmanager.cpp
 --- ktorrent-5.1.1/plugins/infowidget/geoipmanager.cpp.2~	2018-08-31 01:37:04.000000000 +0200
-+++ ktorrent-5.1.1/plugins/infowidget/geoipmanager.cpp	2019-05-11 21:18:37.187210091 +0200
-@@ -19,6 +19,7 @@
++++ ktorrent-5.1.1/plugins/infowidget/geoipmanager.cpp	2019-05-11 22:44:01.874662006 +0200
+@@ -1,6 +1,7 @@
+ /***************************************************************************
+  *   Copyright (C) 2009 by Joris Guisson                                   *
+  *   joris.guisson@gmail.com                                               *
++ *   Copyright (C) 2019 by Bernhard "Bero" Rosenkraenzer <bero@lindev.ch>  *
+  *                                                                         *
+  *   This program is free software; you can redistribute it and/or modify  *
+  *   it under the terms of the GNU General Public License as published by  *
+@@ -18,12 +19,16 @@
+  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
   ***************************************************************************/
  
++#ifdef HAVE_MAXMINDDB
  #include <KIO/CopyJob>
 +#include <KTar>
++#endif
  
  #include <QDateTime>
  #include <QFile>
-@@ -35,16 +36,39 @@ using namespace bt;
+ #include <QFileInfo>
+ #include <QStandardPaths>
++#include <QLocale>
+ 
+ #include <util/log.h>
+ #include <util/decompressfilejob.h>
+@@ -35,16 +40,45 @@ using namespace bt;
  
  namespace kt
  {
 -    QUrl GeoIPManager::geoip_url = QUrl(QStringLiteral("http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz"));
++#ifdef HAVE_MAXMINDDB
 +    void UntarThread::run() {
 +        KTar tar(src);
 +        if(!tar.open(QIODevice::ReadOnly)) {
@@ -1251,14 +1338,19 @@ diff -up ktorrent-5.1.1/plugins/infowidget/geoipmanager.cpp.2~ ktorrent-5.1.1/pl
 +    }
 +
 +    QUrl GeoIPManager::geoip_url = QUrl(QStringLiteral("https://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz"));
++#endif
  
 -    GeoIPManager::GeoIPManager(QObject* parent): QObject(parent), geo_ip(nullptr), decompress_thread(nullptr)
-+    GeoIPManager::GeoIPManager(QObject* parent): QObject(parent), untar_thread(nullptr)
++    GeoIPManager::GeoIPManager(QObject* parent): QObject(parent)
++#ifdef HAVE_MAXMINDDB
++                                               , untar_thread(nullptr)
++#endif
      {
 -#ifdef USE_SYSTEM_GEOIP
 -        geo_ip = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
 -#else
 -        geoip_data_file = QStandardPaths::locate(QStandardPaths::AppDataLocation, QStringLiteral("geoip.dat"));
++#ifdef HAVE_MAXMINDDB
 +        memset(&geo_ip, 0, sizeof(geo_ip));
 +        geoip_data_file = QStandardPaths::locate(QStandardPaths::AppDataLocation, QStringLiteral("GeoLite2-Country.mmdb"));
          if (geoip_data_file.isEmpty())
@@ -1267,7 +1359,7 @@ diff -up ktorrent-5.1.1/plugins/infowidget/geoipmanager.cpp.2~ ktorrent-5.1.1/pl
  
          if (geoip_data_file.isEmpty())
          {
-@@ -52,8 +76,8 @@ namespace kt
+@@ -52,8 +86,8 @@ namespace kt
          }
          else
          {
@@ -1278,17 +1370,13 @@ diff -up ktorrent-5.1.1/plugins/infowidget/geoipmanager.cpp.2~ ktorrent-5.1.1/pl
              {
                  QFileInfo fi(geoip_data_file);
                  QDateTime now = QDateTime::currentDateTime();
-@@ -65,44 +89,56 @@ namespace kt
-                 }
-             }
-         }
--#endif
-     }
+@@ -70,49 +104,86 @@ namespace kt
  
      GeoIPManager::~GeoIPManager()
      {
 -        if (geo_ip)
 -            GeoIP_delete(geo_ip);
++#ifdef HAVE_MAXMINDDB
 +        if (geo_ip.filename)
 +            MMDB_close(&geo_ip);
  
@@ -1301,6 +1389,7 @@ diff -up ktorrent-5.1.1/plugins/infowidget/geoipmanager.cpp.2~ ktorrent-5.1.1/pl
 +            untar_thread->wait();
 +            delete untar_thread;
          }
++#endif
      }
  
 -    int GeoIPManager::findCountry(const QString& addr)
@@ -1310,23 +1399,18 @@ diff -up ktorrent-5.1.1/plugins/infowidget/geoipmanager.cpp.2~ ktorrent-5.1.1/pl
 -        else
 -            return GeoIP_id_by_name(geo_ip, addr.toLatin1().data());
 -    }
--
++#ifndef HAVE_MAXMINDDB
++    static bool warnedAboutMissingMaxmindDB = false;
++#endif
+ 
 -    QString GeoIPManager::countryCode(int country_id)
--    {
++    QString GeoIPManager::findCountry(const QString& addr)
+     {
 -        if (country_id > 0 && country_id < 247)
 -            return QString::fromLatin1(GeoIP_country_code[country_id]);
 -        else
 -            return QString();
--    }
--
--    QString GeoIPManager::countryName(int country_id)
--    {
--        if (country_id > 0 && country_id < 247)
--            return QString::fromUtf8(GeoIP_country_name[country_id]);
--        else
--            return QString();
-+    QString GeoIPManager::findCountry(const QString& addr)
-+    {
++#ifdef HAVE_MAXMINDDB
 +        if (!geo_ip.filename)
 +            return QString::null;
 +
@@ -1335,17 +1419,33 @@ diff -up ktorrent-5.1.1/plugins/infowidget/geoipmanager.cpp.2~ ktorrent-5.1.1/pl
 +        if (gai_error || mmdb_error != MMDB_SUCCESS || !result.found_entry)
 +            return QString::null;
 +        MMDB_entry_data_s entry_data;
-+        status = MMDB_get_value(&result.entry, &entry_data, "country", "names", "en", nullptr);
++	QString preferredLocale=QLocale::system().name().section(QChar::fromLatin1('_'), 0, 0);
++        status = MMDB_get_value(&result.entry, &entry_data, "country", "names", preferredLocale.toLatin1().data(), nullptr);
++	if (status != MMDB_SUCCESS || !entry_data.has_data || entry_data.type != MMDB_DATA_TYPE_UTF8_STRING) // Maxmind doesn't translate to every language -- fall back to English
++            status = MMDB_get_value(&result.entry, &entry_data, "country", "names", "en", nullptr);
 +        if (status != MMDB_SUCCESS || !entry_data.has_data || entry_data.type != MMDB_DATA_TYPE_UTF8_STRING)
 +            return QString::null;
 +        char *country_utf8=strndup(entry_data.utf8_string, entry_data.data_size);
 +        QString country=QString::fromUtf8(country_utf8);
 +        free(country_utf8);
 +        return country;
-+    }
-+
++#else
++        if (!warnedAboutMissingMaxmindDB) {
++            Out(SYS_INW | LOG_NOTICE) << "Compiled without MaxMindDB support, country lookup not available." << endl;
++            warnedAboutMissingMaxmindDB=true;
++        }
++        return QString::null;
++#endif
+     }
+ 
+-    QString GeoIPManager::countryName(int country_id)
 +    QString GeoIPManager::countryCode(const QString &addr)
-+    {
+     {
+-        if (country_id > 0 && country_id < 247)
+-            return QString::fromUtf8(GeoIP_country_name[country_id]);
+-        else
+-            return QString();
++#ifdef HAVE_MAXMINDDB
 +        if (!geo_ip.filename)
 +            return QString::null;
 +
@@ -1361,10 +1461,28 @@ diff -up ktorrent-5.1.1/plugins/infowidget/geoipmanager.cpp.2~ ktorrent-5.1.1/pl
 +        QString country=QString::fromUtf8(country_utf8);
 +        free(country_utf8);
 +        return country;
++#else
++        if (!warnedAboutMissingMaxmindDB) {
++            Out(SYS_INW | LOG_NOTICE) << "Compiled without MaxMindDB support, country lookup not available." << endl;
++            warnedAboutMissingMaxmindDB=true;
++        }
++        return QString::null;
++#endif
      }
  
++#ifdef HAVE_MAXMINDDB
      void GeoIPManager::downloadDataBase()
-@@ -123,48 +159,31 @@ namespace kt
+     {
+-#ifndef USE_SYSTEM_GEOIP
+         Out(SYS_INW | LOG_NOTICE) << "Downloading GeoIP database: " << geoip_url << endl;
+         download_destination = kt::DataDir(CreateIfNotExists) + geoip_url.fileName();
+         KIO::CopyJob* job = KIO::copy(geoip_url, QUrl::fromLocalFile(download_destination), KIO::Overwrite | KIO::HideProgressInfo);
+         connect(job, &KIO::CopyJob::result, this, &GeoIPManager::databaseDownloadFinished);
+-#endif
+     }
+ 
+     void GeoIPManager::databaseDownloadFinished(KJob* job)
+@@ -123,48 +194,31 @@ namespace kt
              return;
          }
  
@@ -1414,27 +1532,42 @@ diff -up ktorrent-5.1.1/plugins/infowidget/geoipmanager.cpp.2~ ktorrent-5.1.1/pl
 -                Out(SYS_INW | LOG_NOTICE) << "Failed to open GeoIP database  " << endl;
 +            MMDB_close(&geo_ip);
 +            memset(&geo_ip, 0, sizeof(geo_ip));
-         }
--
--        decompress_thread->wait();
--        delete decompress_thread;
--        decompress_thread = nullptr;
++        }
 +        int status = MMDB_open(QFile::encodeName(geoip_data_file).data(), 0, &geo_ip);
 +        if (status != MMDB_SUCCESS) {
 +            Out(SYS_INW | LOG_NOTICE) << "Failed to open GeoIP database  " << endl;
 +            memset(&geo_ip, 0, sizeof(geo_ip));
-+        }
-+
+         }
+ 
+-        decompress_thread->wait();
+-        delete decompress_thread;
+-        decompress_thread = nullptr;
 +        untar_thread->wait();
 +        delete untar_thread;
 +        untar_thread = nullptr;
      }
  
  
+@@ -172,6 +226,7 @@ namespace kt
+     {
+         geoip_url = url;
+     }
++#endif
+ 
+     ///////////////////////////////////
+ 
 diff -up ktorrent-5.1.1/plugins/infowidget/geoipmanager.h.2~ ktorrent-5.1.1/plugins/infowidget/geoipmanager.h
 --- ktorrent-5.1.1/plugins/infowidget/geoipmanager.h.2~	2018-08-31 01:37:04.000000000 +0200
-+++ ktorrent-5.1.1/plugins/infowidget/geoipmanager.h	2019-05-11 21:15:06.614454013 +0200
-@@ -25,21 +25,26 @@
++++ ktorrent-5.1.1/plugins/infowidget/geoipmanager.h	2019-05-11 22:29:42.002192263 +0200
+@@ -1,6 +1,7 @@
+ /***************************************************************************
+  *   Copyright (C) 2009 by Joris Guisson                                   *
+  *   joris.guisson@gmail.com                                               *
++ *   Copyright (C) 2019 by Bernhard "Bero" Rosenkraenzer <bero@lindev.ch>  *
+  *                                                                         *
+  *   This program is free software; you can redistribute it and/or modify  *
+  *   it under the terms of the GNU General Public License as published by  *
+@@ -25,21 +26,30 @@
  #include <QThread>
  #include <QUrl>
  
@@ -1443,6 +1576,7 @@ diff -up ktorrent-5.1.1/plugins/infowidget/geoipmanager.h.2~ ktorrent-5.1.1/plug
 -#else
 -#include "GeoIP.h"
 -#endif
++#ifdef HAVE_MAXMINDDB
 +#include <maxminddb.h>
  
  class KJob;
@@ -1452,9 +1586,11 @@ diff -up ktorrent-5.1.1/plugins/infowidget/geoipmanager.h.2~ ktorrent-5.1.1/plug
 -    class DecompressThread;
 -}
 +class KArchiveDirectory;
++#endif
  
  namespace kt
  {
++#ifdef HAVE_MAXMINDDB
 +    class UntarThread : public QThread
 +    {
 +        Q_OBJECT
@@ -1468,10 +1604,11 @@ diff -up ktorrent-5.1.1/plugins/infowidget/geoipmanager.h.2~ ktorrent-5.1.1/plug
 +        QString src;
 +        QString dest;
 +    };
++#endif
  
  
      /**
-@@ -57,21 +62,14 @@ namespace kt
+@@ -57,22 +67,16 @@ namespace kt
           * @param addr The IP address
           * @return The country ID
           */
@@ -1494,9 +1631,11 @@ diff -up ktorrent-5.1.1/plugins/infowidget/geoipmanager.h.2~ ktorrent-5.1.1/plug
 -        QString countryCode(int country_id);
 +        QString countryCode(const QString& addr);
  
++#ifdef HAVE_MAXMINDDB
          /// Get the database URL
          static QUrl geoIPUrl() {return geoip_url;}
-@@ -87,10 +85,10 @@ namespace kt
+ 
+@@ -87,11 +91,12 @@ namespace kt
          void decompressFinished();
  
      private:
@@ -1507,12 +1646,22 @@ diff -up ktorrent-5.1.1/plugins/infowidget/geoipmanager.h.2~ ktorrent-5.1.1/plug
 -        bt::DecompressThread* decompress_thread;
 +        UntarThread* untar_thread;
          static QUrl geoip_url;
++#endif
      };
+ 
  
 diff -up ktorrent-5.1.1/plugins/infowidget/peerviewmodel.cpp.2~ ktorrent-5.1.1/plugins/infowidget/peerviewmodel.cpp
 --- ktorrent-5.1.1/plugins/infowidget/peerviewmodel.cpp.2~	2018-08-31 01:37:04.000000000 +0200
-+++ ktorrent-5.1.1/plugins/infowidget/peerviewmodel.cpp	2019-05-11 20:34:50.476474981 +0200
-@@ -59,12 +59,8 @@ namespace kt
++++ ktorrent-5.1.1/plugins/infowidget/peerviewmodel.cpp	2019-05-11 22:29:42.002192263 +0200
+@@ -2,6 +2,7 @@
+  *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
+  *   joris.guisson@gmail.com                                               *
+  *   ivasic@gmail.com                                                      *
++ *   Copyright (C) 2019 by Bernhard "Bero" Rosenkraenzer <bero@lindev.ch>  *
+  *                                                                         *
+  *   This program is free software; you can redistribute it and/or modify  *
+  *   it under the terms of the GNU General Public License as published by  *
+@@ -59,12 +60,8 @@ namespace kt
  
          if (geo_ip)
          {
