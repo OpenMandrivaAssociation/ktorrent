@@ -11,7 +11,7 @@ Source0:	http://download.kde.org/stable/ktorrent/5.0/%{name}-%{version}.tar.xz
 # have now become more common than .torrent files, while ktorrent also behaves
 # better now with DHT enabled than in the past
 Patch1:		ktorrent-4.3.1-enable-dht-by-default.patch
-Patch2:		ktorrent-5.1.1-geoip.patch
+#Patch2:		ktorrent-5.1.1-geoip.patch
 
 BuildRequires:	boost-devel
 BuildRequires:	gmp-devel
