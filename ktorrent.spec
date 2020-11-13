@@ -1,7 +1,7 @@
 Summary:	BitTorrent program for KDE
 Name:		ktorrent
 Version:	5.2.0
-Release:	1
+Release:	2
 Group:		Networking/File transfer
 License:	GPLv2+
 Url:		http://ktorrent.org/
@@ -12,12 +12,14 @@ Source0:	http://download.kde.org/stable/ktorrent/5.0/%{name}-%{version}.tar.xz
 # better now with DHT enabled than in the past
 Patch1:		ktorrent-4.3.1-enable-dht-by-default.patch
 #Patch2:		ktorrent-5.1.1-geoip.patch
+Patch3:		0001-Update-FindTaglib-from-ECM.patch
 
 BuildRequires:	boost-devel
 BuildRequires:	gmp-devel
 BuildRequires:	cmake(KF5Torrent) >= 2.1
 BuildRequires:	pkgconfig(qca2-qt5)
 BuildRequires:	pkgconfig(taglib)
+BuildRequires:	pkgconfig(geoip)
 BuildRequires:	cmake(Qt5Script)
 BuildRequires:	cmake(Qt5Test)
 BuildRequires:	cmake(KF5I18n)
@@ -81,7 +83,7 @@ KTorrent library.
 find . -name "*.py" |xargs 2to3 -w
 
 %build
-%cmake_kde5
+%cmake_kde5 -DWITH_SYSTEM_GEOIP=ON
 %ninja
 
 %install
