@@ -1,7 +1,7 @@
 Summary:	BitTorrent program for KDE
 Name:		ktorrent
 Version:	5.2.0
-Release:	2
+Release:	3
 Group:		Networking/File transfer
 License:	GPLv2+
 Url:		http://ktorrent.org/
@@ -22,6 +22,7 @@ BuildRequires:	pkgconfig(taglib)
 BuildRequires:	pkgconfig(geoip)
 BuildRequires:	cmake(Qt5Script)
 BuildRequires:	cmake(Qt5Test)
+BuildRequires:	cmake(Qt5WebEngineWidgets)
 BuildRequires:	cmake(KF5I18n)
 BuildRequires:	cmake(KF5Crash)
 BuildRequires:	cmake(KF5KIO)
