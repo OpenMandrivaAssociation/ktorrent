@@ -1,18 +1,18 @@
+%define stable %([ "`echo %{version} |cut -d. -f3`" -ge 80 ] && echo -n un; echo -n stable)
 Summary:	BitTorrent program for KDE
 Name:		ktorrent
-Version:	5.2.0
-Release:	3
+Version:	20.11.80
+Release:	1
 Group:		Networking/File transfer
 License:	GPLv2+
 Url:		http://ktorrent.org/
-Source0:	http://download.kde.org/stable/ktorrent/5.0/%{name}-%{version}.tar.xz
+Source0:	http://download.kde.org/%{stable}/release-service/%{version}/src/%{name}-%{version}.tar.xz
 #Patch0:		ktorrent-4.3.1-add-missing-linkage.patch
 # enable DHT by default as it's strongly recommended for magnet links which
 # have now become more common than .torrent files, while ktorrent also behaves
 # better now with DHT enabled than in the past
 Patch1:		ktorrent-4.3.1-enable-dht-by-default.patch
 #Patch2:		ktorrent-5.1.1-geoip.patch
-Patch3:		0001-Update-FindTaglib-from-ECM.patch
 
 BuildRequires:	boost-devel
 BuildRequires:	gmp-devel
