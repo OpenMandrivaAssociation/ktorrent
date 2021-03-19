@@ -1,7 +1,7 @@
 %define stable %([ "`echo %{version} |cut -d. -f3`" -ge 80 ] && echo -n un; echo -n stable)
 Summary:	BitTorrent program for KDE
 Name:		ktorrent
-Version:	20.12.2
+Version:	20.12.3
 Release:	1
 Group:		Networking/File transfer
 License:	GPLv2+
@@ -56,7 +56,7 @@ KTorrent is a BitTorrent program for KDE. Its main features are:
 %files -f %{name}.lang
 %{_kde5_bindir}/*
 %{_kde5_libdir}/qt5/plugins/%{name}/
-%{_kde5_notificationsdir}5/%{name}.notifyrc
+%{_kde5_notificationsdir}/%{name}.notifyrc
 %{_kde5_xmlguidir}/%{name}/*.rc
 %{_kde5_applicationsdir}/org.kde.ktorrent.desktop
 %{_kde5_iconsdir}/*/*/*/*
