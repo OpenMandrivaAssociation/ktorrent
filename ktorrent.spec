@@ -1,8 +1,8 @@
 %define stable %([ "`echo %{version} |cut -d. -f3`" -ge 80 ] && echo -n un; echo -n stable)
 Summary:	BitTorrent program for KDE
 Name:		ktorrent
-Version:	22.04.1
-Release:	3
+Version:	22.04.2
+Release:	1
 Group:		Networking/File transfer
 License:	GPLv2+
 Url:		http://ktorrent.org/
