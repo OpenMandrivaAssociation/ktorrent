@@ -33,7 +33,7 @@ BuildRequires:	cmake(KF5KCMUtils)
 BuildRequires:	cmake(KF5Kross)
 BuildRequires:	cmake(KF5KrossUi)
 BuildRequires:	cmake(KF5WebKit)
-BuildRequires:	cmake(LibKWorkspace)
+BuildRequires:	cmake(LibKWorkspace) < 5.27.50
 BuildRequires:	cmake(KF5DNSSD)
 BuildRequires:	cmake(KF5IconThemes)
 BuildRequires:	cmake(KF5Plotting)
