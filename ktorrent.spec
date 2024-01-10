@@ -2,7 +2,7 @@
 Summary:	BitTorrent program for KDE
 Name:		ktorrent
 Version:	23.08.4
-Release:	2
+Release:	3
 Group:		Networking/File transfer
 License:	GPLv2+
 Url:		http://ktorrent.org/
