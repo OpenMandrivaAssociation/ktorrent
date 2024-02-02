@@ -54,22 +54,7 @@ KTorrent is a BitTorrent program for KDE. Its main features are:
 %{_iconsdir}/*/*/*/*
 %{_datadir}/ktorrent
 %{_datadir}/metainfo/org.kde.ktorrent.appdata.xml
-
-
-#-------------------------------------------------------------------------
-
-%define ktcore_major 16
-%define libktcore %mklibname ktcore %{ktcore_major}
-
-%package -n %{libktcore}
-Summary:	Ktorrent libbrary
-Group:		System/Libraries
-
-%description -n %{libktcore}
-KTorrent library.
-
-%files -n %{libktcore}
-%{_kde5_libdir}/libktcore.so.%{ktcore_major}*
+%{_libdir}/libktcore.so*
 
 %prep
 %autosetup -p1 -n ktorrent-%{version}
