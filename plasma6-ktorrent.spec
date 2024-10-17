@@ -8,7 +8,7 @@ Version:	24.08.2
 Release:	%{?git:0.%{git}.}1
 Group:		Networking/File transfer
 License:	GPLv2+
-Url:		http://ktorrent.org/
+Url:		https://ktorrent.org/
 %if 0%{?git:1}
 Source0:	https://invent.kde.org/network/ktorrent/-/archive/%{gitbranch}/ktorrent-%{gitbranchd}.tar.bz2#/ktorrent-%{git}.tar.bz2
 %else
