@@ -5,7 +5,7 @@ Version:	23.08.5
 Release:	2
 Group:		Networking/File transfer
 License:	GPLv2+
-Url:		http://ktorrent.org/
+Url:		https://ktorrent.org/
 Source0:	http://download.kde.org/%{stable}/release-service/%{version}/src/%{name}-%{version}.tar.xz
 #Patch0:		ktorrent-4.3.1-add-missing-linkage.patch
 # enable DHT by default as it's strongly recommended for magnet links which
