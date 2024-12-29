@@ -5,7 +5,7 @@
 Summary:	BitTorrent program for KDE
 Name:		plasma6-ktorrent
 Version:	24.12.0
-Release:	%{?git:0.%{git}.}1
+Release:	%{?git:0.%{git}.}2
 Group:		Networking/File transfer
 License:	GPLv2+
 Url:		https://ktorrent.org/
