@@ -4,7 +4,7 @@
 %define stable %([ "`echo %{version} |cut -d. -f3`" -ge 80 ] && echo -n un; echo -n stable)
 Summary:	BitTorrent program for KDE
 Name:		plasma6-ktorrent
-Version:	24.12.2
+Version:	24.12.3
 Release:	%{?git:0.%{git}.}1
 Group:		Networking/File transfer
 License:	GPLv2+
