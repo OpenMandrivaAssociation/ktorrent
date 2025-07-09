@@ -3,7 +3,7 @@
 %define gitbranchd %(echo %{gitbranch} |sed -e "s,/,-,g")
 %define stable %([ "`echo %{version} |cut -d. -f3`" -ge 80 ] && echo -n un; echo -n stable)
 Summary:	BitTorrent program for KDE
-Name:		plasma6-ktorrent
+Name:		ktorrent
 Version:	25.04.0
 Release:	%{?git:0.%{git}.}1
 Group:		Networking/File transfer
