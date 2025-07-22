@@ -4,7 +4,7 @@
 %define stable %([ "`echo %{version} |cut -d. -f3`" -ge 80 ] && echo -n un; echo -n stable)
 Summary:	BitTorrent program for KDE
 Name:		ktorrent
-Version:	25.04.0
+Version:	25.04.3
 Release:	%{?git:0.%{git}.}1
 Group:		Networking/File transfer
 License:	GPLv2+
@@ -50,6 +50,12 @@ BuildRequires:	pkgconfig(libmaxminddb)
 BuildRequires:	cmake
 BuildRequires:	ninja
 
+%rename plasma6-ktorrent
+
+BuildSystem:	cmake
+BuildOption:	-DWITH_SYSTEM_GEOIP=ON
+BuildOption:	-DKDE_INSTALL_USE_QT_SYS_PATHS:BOOL=ON
+
 %description
 KTorrent is a BitTorrent program for KDE. Its main features are:
  o Downloads torrent files
@@ -69,19 +75,6 @@ KTorrent is a BitTorrent program for KDE. Its main features are:
 %{_datadir}/metainfo/org.kde.ktorrent.appdata.xml
 %{_libdir}/libktcore.so*
 
-%prep
-%autosetup -p1 -n ktorrent-%{?git:%{gitbranchd}}%{!?git:%{version}}
-%cmake -DWITH_SYSTEM_GEOIP=ON \
-	-DKDE_INSTALL_USE_QT_SYS_PATHS:BOOL=ON \
-	-G Ninja
-
-%build
-%ninja_build -C build
-
-%install
-%ninja_install -C build
-
+%install -a
 # make it preferred over kget:
 echo "InitialPreference=10" >> %{buildroot}%{_kde5_applicationsdir}/org.kde.ktorrent.desktop
-
-%find_lang ktorrent --with-html
