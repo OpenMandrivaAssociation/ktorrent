@@ -26,6 +26,7 @@ BuildRequires:	gmp-devel
 BuildRequires:	cmake(KTorrent6) >= 2.1
 BuildRequires:	pkgconfig(taglib)
 BuildRequires:	pkgconfig(geoip)
+BuildRequires:	cmake(Qt6Core5Compat)
 BuildRequires:	cmake(Qt6Test)
 BuildRequires:	cmake(Qt6WebEngineCore)
 BuildRequires:	cmake(Qt6WebEngineWidgets)
