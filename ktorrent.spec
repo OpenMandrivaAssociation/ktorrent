@@ -4,8 +4,8 @@
 %define stable %([ "`echo %{version} |cut -d. -f3`" -ge 80 ] && echo -n un; echo -n stable)
 Summary:	BitTorrent program for KDE
 Name:		ktorrent
-Version:	25.08.3
-Release:	%{?git:0.%{git}.}2
+Version:	25.12.0
+Release:	%{?git:0.%{git}.}1
 Group:		Networking/File transfer
 License:	GPLv2+
 Url:		https://ktorrent.org/
@@ -78,4 +78,4 @@ KTorrent is a BitTorrent program for KDE. Its main features are:
 
 %install -a
 # make it preferred over kget:
-echo "InitialPreference=10" >> %{buildroot}%{_kde5_applicationsdir}/org.kde.ktorrent.desktop
+echo "InitialPreference=10" >> %{buildroot}%{_datadir}/applications/org.kde.ktorrent.desktop
